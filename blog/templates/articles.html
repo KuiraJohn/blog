@@ -1,48 +1,63 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}All Articles{% endblock %}
+{% block title %}<span class="fs-4 fw-semibold" id="gist-btn">All Articles</span> {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="title">
-            <h2>All Articles</h2>
-        </div>
-        <form method="GET">
-            <input type="text" id="query" name="query"  class="textbox" placeholder="Search">
-            <button type="submit" class="button">
-                <i class='bx bx-search'></i>
-            </button>
-        </form>
-        <div class="article-meta">
-            <a class="back-button" href="{% url 'blog:articles' %}">All Articles</a>
-            <span class="tag">django</span>
-            <span class="tag">php</span>
-            <span class="tag">development</span>
-        </div>
-
-        <hr>
-
-        <div class="featured-content">
-          {% for article in articles %}
-            <!-- item -->
-            <div class="featured-item">
-                <div class="featured-img">
-                  <a href="{{ article.get_absolute_url }}">
-                    <img src="{{ article.image.url}}" alt="">
-                    <span><i class='bx bx-calendar-star'></i> June 21</span>
-                    <span>{{ article.sub_headline }}</span>
-                  </a>
-                </div>
-                <div class="featured-title">
-                    <a href="article.get_absolute_url ">{{ article.headline }}</a>
-                </div>
+    <section id="all-articles">
+        <div class="container">
+            <div class="title">
+                <h2>All Articles</h2>
+            </div>
+            <form method="GET">
+                <input type="text" id="query" name="query"  class="textbox" placeholder="Search">
+                <button type="submit" class="button">
+                    <i class='bx bx-search'></i>
+                </button>
+            </form>
+            <div class="article-meta">
+                <a class="back-button" href="{% url 'blog:articles' %}">All Articles</a>
+                <span class="tag">django</span>
+                <span class="tag">php</span>
+                <span class="tag">development</span>
             </div>
 
-            <!-- end of item -->
-            {% empty %} 
-            <h3>No Articles found</h3>
-            {% endfor %}
+            <hr>
+
+            <div class="featured-content">
+                {% for article in articles %}
+                    <!-- Featured Article Item -->
+                    <div class="featured-item">
+                        <div class="featured-img">
+                            <a href="{{ article.get_absolute_url }}">
+                                <img src="{{ article.image.url }}" alt="">
+                                <span><i class='bx bx-calendar-star'></i> June 21</span>
+                                <span>{{ article.sub_headline }}</span>
+                            </a>
+                        </div>
+                        <div class="featured-title">
+                            <a href="{{ article.get_absolute_url }}">{{ article.headline }}</a>
+                        </div>
+                        <div class="featured-content">
+                            {{ article.content }}
+                        </div>
+                    </div>
+                    <!-- End of Featured Article Item -->
+                {% empty %}
+                    <h3>No Articles found</h3>
+                {% endfor %}
+            </div>
         </div>
-    </div>
+    </section>
+{% endblock %}
+
+{% block extra_head %}
+    <script>
+        function scrollToSection(sectionId) {
+            var section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    </script>
 {% endblock %}

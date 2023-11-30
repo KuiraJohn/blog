@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Coding{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container">
+            <div class="title">
+                <h3>
+                <span class="fs-4 fw-semibold" id="gist-btn">About Coding</span> </h3>
+            </div>
+            <p>
+                Welcome to Coding.Blog, where we share knowledge and tactics about coding languages and their practical uses. Our mission is to provide valuable insights, tips, and stories for coders and programming enthusiasts.
+            </p>
+
+            <h3>Our Vision</h3>
+            <p>
+                At Coding.Blog, we envision a world where coding is accessible to everyone. We believe that sharing knowledge and experiences can empower individuals to become proficient in coding and contribute to the ever-evolving tech landscape.
+            </p>
+
+            <h3>What You'll Find</h3>
+            <p>
+                Explore a variety of topics, including the latest trends in coding, programming languages, development practices, and real-world applications. Whether you're a beginner or an experienced coder, you'll find valuable content tailored to your interests.
+            </p>
+
+            <h3>Join Our Community</h3>
+            <p>
+                Connect with fellow coders, share your experiences, and stay updated on the latest in the coding world. Follow us on social media and join the conversation. Let's learn and grow together!
+            </p>
+
+            <div class="article-meta">
+                <a class="back-button" href="{% url 'blog:home' %}">Back to Home</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,88 +1,110 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
-{% block title %}Omen. Bloggies{% endblock %}
+{% block title %}Coders Home{% endblock %}
 
 {% block content %}
-    <!-- header -->
-    <!-- <header>
-        <nav class="navbar">
-            <div class="container">
-                <a href="{% url 'blog:home' %}" class="navbar-brand">Academy.Omen</a>
-                <div class="navbar-nav">
-                    <a href="{% url 'blog:home' %}">home</a>
-                    <a href="{% url 'blog:articles' %}">articles</a>
-                    <a href="">about</a>
-                </div>
-            </div>
-        </nav>
-        <div class="banner">
-            <div class="container">
-                <h1 class="banner-title">
-                    <span>Omen.</span> Bloggies
-                </h1>
-                <p>everything you need to know about building a Sass with Django</p>
-            </div>
-        </div>
-    </header> -->
-    <!-- end of header -->
-
-    <!-- featured -->
+    <!-- Featured Articles -->
     <section class="featured" id="featured">
         <div class="container">
             <div class="title">
-                <h2>Featured articles</h2>
-            </div>
+                <h2> <span class="fs-4 fw-semibold" id="gist-btn">Featured Articles</span> </h2>
 
+            </div>
             <div class="featured-content">
-              {% for article in articles %}
-                <!-- item -->
-                <div class="featured-item">
-                    <div class="featured-img">
-                      <a href="{{ article.get_absolute_url }}">
-                        <img src="{{ article.image.url }}" alt="">
-                        <span><i class='bx bx-calendar-star'></i> June 21</span>
-                        <span>{{ article.sub_headline }}</span>
-                      </a>
+                {% for article in articles %}
+                    <!-- Featured Article Item -->
+                    <div class="featured-item">
+                        <div class="featured-img">
+                            <a href="{{ article.get_absolute_url }}">
+                                <img src="{{ article.image.url }}" alt="">
+                                <span><i class='bx bx-calendar-star'></i> June 21</span>
+                                <span>{{ article.sub_headline }}</span>
+                            </a>
+                        </div>
+                        <div class="featured-title">
+                            <a href="{{ article.get_absolute_url }}">{{ article.headline }}</a>
+                        </div>
                     </div>
-                    <div class="featured-title">
-                        <a href="{{ article.get_absolute_url }}">{{ article.headline }}</a>
-                    </div>
-                </div>
-                <!-- end of item -->
+                    <!-- End of Featured Article Item -->
                 {% empty %}
-                <h3> No featured Articles at the moment</h3>
+                    <h3>No featured Articles at the moment</h3>
                 {% endfor %}
             </div>
         </div>
     </section>
-    <!-- end of featured -->
+    <!-- End of Featured Articles -->
 
-    <!-- about -->
-    <section class="about" id="about">
-        <div class="container">
-            <div class="about-content">
-                <div>
-                    <img src="{% static 'images/about.jpg' %}" alt="">
-                </div>
-                <div class="about-text">
-                    <div class="title">
-                        <h2>Catherine Doe</h2>
-                        <p>art & design is my passion</p>
+    <!-- About Catherine Doe -->
+   <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card d-flex mx-auto">
+                        <div class="card-image">
+                            <img class="img-fluid d-flex mx-auto" src="https://i.imgur.com/3TlwnLF.jpg">
+                        </div>
+                        <div class="card-text">
+                            <div class="card-title"> From Search Engines leader1</div>
+                            Coding is about creating something that didn't exist before. It's a way to leave your mark on the world
+                        </div>
+                        <div class="footer">
+                            <span id="name">Micheal Smith<br></span>
+                            <span id="position">CEO of <a href="#">Google.com</a></span>
+                        </div>
                     </div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id totam voluptatem saepe eius ipsum nam
-                        provident sapiente, natus et vel eligendi laboriosam odit eos temporibus impedit veritatis ut,
-                        illo deserunt illum voluptate quis beatae quod. Necessitatibus provident dicta consectetur
-                        labore!</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam corrupti natus, eos quia recusandae
-                        voluptatem veniam modi officiis minima provident rem sint porro fuga quos tempora ea suscipit
-                        vero velit sed laudantium eaque necessitatibus maxime!</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="card d-flex mx-auto">
+                        <div class="card-image">
+                            <img class="img-fluid d-flex mx-auto" src="https://i.imgur.com/Uz4FjGZ.jpg">
+                        </div>
+                        <div class="card-text">
+                            <div class="card-title">From the Social Media leader!</div>
+                           Coding is a powerful tool to bring your ideas to life. Don't be afraid to embrace it
+                        </div>
+                        <div class="footer">
+                            <span id="name">Angellia Miller<br></span>
+                            <span id="position">CEO of <a href="#">Facebook.com</a></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card d-flex mx-auto ">
+                        <div class="card-image">
+                            <img class="img-fluid d-flex mx-auto" src="https://i.imgur.com/udGH5tO.jpg">
+                        </div>
+                        <div class="card-text">
+                            <div class="card-title">From the digital Channels Leader!</div>
+                            Code not only talks to machines; it speaks to the imagination and unlocks the potential of people.
+                        </div>
+                        <div class="footer">
+                            <span id="name">Christina Williams<br></span>
+                            <span id="position">UX Designer at <a href="#">Youtube.com</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- End of About Catherine Doe -->
+
+    <!-- Top Tech Leaders Messages -->
+    <section class="developers" id="developers">
+        <div class="container">
+            <div class="developers-content">
+                <div class="title">
+                    <h3> <span class="fs-4 fw-semibold" id="gist-btn">Top Tech Leaders</span> </h3>
+                </div>
+                <div class="auto-scroll-messages">
+{#                    <!-- Auto-scrolling messages from top tech leaders -->#}
+{#                    <div class="message">Message 1 from a top tech leader</div>#}
+{#                    <div class="message">Message 2 from a top tech leader</div>#}
+{#                    <div class="message">Message 3 from a top tech leader</div>#}
+{#                    <!-- Add more messages as needed -->#}
                 </div>
             </div>
         </div>
     </section>
-    <!-- end of about -->
+    <!-- End of Top Tech Leaders Messages -->
 
 {% endblock %}
 
@@ -90,4 +112,20 @@
     <style type="text/css">
         /* Additional styles specific to this page if needed */
     </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Auto-scrolling functionality
+            var scrollSpeed = 30; // Adjust the scroll speed as needed
+
+            function scrollMessages() {
+                var scrollHeight = $('.auto-scroll-messages')[0].scrollHeight;
+                $('.auto-scroll-messages').animate({ scrollTop: scrollHeight }, scrollSpeed);
+            }
+
+            // Call the scrollMessages function at regular intervals
+            setInterval(scrollMessages, 3000); // Adjust the interval as needed (e.g., every 3 seconds)
+        });
+    </script>
 {% endblock %}

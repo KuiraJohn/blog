@@ -12,6 +12,10 @@ def home(request):
     return render(request, 'index.html', context)
 
 
+def about(request):
+    return render(request, 'about.html')
+
+
 def article(request, article):
     article = get_object_or_404(Article, slug=article, status='published')
     context = {
