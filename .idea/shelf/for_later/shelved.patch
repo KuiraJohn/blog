@@ -1,0 +1,131 @@
+Index: blog/views.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># views.py\nfrom django.shortcuts import get_object_or_404, render\nfrom .models import Article, Profile, Tag\nfrom django.db.models import Q\n\n\ndef home(request):\n    featured = Article.articlemanager.filter(featured=True)[0:3]\n    context = {\n        'articles': featured\n    }\n    return render(request, 'index.html', context)\n\n\ndef article(request, article):\n    article = get_object_or_404(Article, slug=article, status='published')\n    context = {\n        'article': article\n    }\n    return render(request, 'article.html', context)\n\n\ndef articles(request):\n    query = request.GET.get('query', '')  # get query from request\n\n    articles = Article.articlemanager.filter(\n        Q(headline__icontains=query) |  # search for query in headline, sub headline, body\n        Q(sub_headline__icontains=query) |\n        Q(body__icontains=query)\n    )\n\n    tags = Tag.objects.all()\n    context = {\n        'articles': articles,\n        'tags': tags,\n    }\n    return render(request, 'articles.html', context)\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/blog/views.py b/blog/views.py
+--- a/blog/views.py	(revision 693cef8f5d10428a828c3c9370a15a56ed69eefc)
++++ b/blog/views.py	(date 1701251806740)
+@@ -1,8 +1,17 @@
+-# views.py
+ from django.shortcuts import get_object_or_404, render
+ from .models import Article, Profile, Tag
+ from django.db.models import Q
++from django.contrib.auth.decorators import login_required
++from django.shortcuts import render, get_object_or_404, redirect
++from django.contrib import messages
+ 
++
++def login(request):
++    # featured = Article.articlemanager.filter(featured=True)[0:3]
++    # context = {
++    #     'articles': featured
++    # }
++    return render(request, 'login.html')
+ 
+ def home(request):
+     featured = Article.articlemanager.filter(featured=True)[0:3]
+@@ -35,3 +44,50 @@
+         'tags': tags,
+     }
+     return render(request, 'articles.html', context)
++
++
++def create_article(request):
++    if request.method == 'POST':
++
++        headline = request.POST.get('headline')
++        sub_headline = request.POST.get('sub_headline')
++        image = request.FILES.get('image')
++        body = request.POST.get('body')
++        tags = request.POST.getlist('tags')
++        stage = request.POST.get('stage', 'draft')
++
++        # Create the article
++        article = Article.objects.create(
++            author=request.user,
++            headline=headline,
++            sub_headline=sub_headline,
++            image=image,
++            body=body,
++            tags=tags,
++            stage=stage,
++        )
++
++        messages.success(request, 'Article created successfully.')
++        return redirect('blog:home')
++
++    return render(request, 'create_article.html')
++
++
++@login_required
++def edit_article(request, article_slug):
++    article = get_object_or_404(Article, slug=article_slug, author=request.user)
++
++    if request.method == 'POST':
++        # Handle form processing manually
++        article.headline = request.POST.get('headline', article.headline)
++        article.sub_headline = request.POST.get('sub_headline', article.sub_headline)
++        article.image = request.FILES.get('image', article.image)
++        article.body = request.POST.get('body', article.body)
++        article.tags = request.POST.getlist('tags', article.tags)
++        article.stage = request.POST.get('stage', article.stage)
++        article.save()
++
++        messages.success(request, 'Article updated successfully.')
++        return redirect('blog:home')
++
++    return render(request, 'edit_article.html', {'article': article})
+Index: blog/urls.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from django.urls import path\nfrom . import views\n\napp_name = 'blog'\n\nurlpatterns = [\n    path('', views.home, name='home'),\n    path('articles/', views.articles, name='articles'),\n\n    # update the article url\n    path('<slug:article>/', views.article, name='article'),\n]\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/blog/urls.py b/blog/urls.py
+--- a/blog/urls.py	(revision 693cef8f5d10428a828c3c9370a15a56ed69eefc)
++++ b/blog/urls.py	(date 1701252149999)
+@@ -5,6 +5,7 @@
+ 
+ urlpatterns = [
+     path('', views.home, name='home'),
++    path('login/', views.login, name='login'),
+     path('articles/', views.articles, name='articles'),
+ 
+     # update the article url
+Index: blog/models.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># models.py\nfrom django.db import models\nfrom django.utils import timezone\nfrom django.contrib.auth.models import User\nfrom django.urls import reverse\nfrom ckeditor_uploader.fields import RichTextUploadingField\n\n\nclass Profile(models.Model):\n    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)\n    first_name = models.CharField(max_length=200, blank=True, null=True)\n    last_name = models.CharField(max_length=200, blank=True, null=True)\n    email = models.CharField(max_length=200)\n    profile_pic = models.ImageField(null=True, blank=True, upload_to=\"profile\")\n    bio = models.TextField(null=True, blank=True)\n    twitter = models.URLField(max_length=200, null=True, blank=True)\n\n    def __str__(self):\n        name = str(self.first_name)\n        if self.last_name:\n            name += ' ' + (self.last_name)\n        return name\n\n\nclass ArticleManager(models.Manager):  # Renamed to ArticleManager\n    def get_queryset(self):\n        return super().get_queryset().filter(status='published')\n\n\nclass Tag(models.Model):\n    name = models.CharField(max_length=100)\n\n\nclass Article(models.Model):\n    author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='author')\n    headline = models.CharField(max_length=200)\n    sub_headline = models.CharField(max_length=200, blank=True, null=True)\n    image = models.ImageField(null=True, blank=True, upload_to=\"article\", default=\"placeholder.png\")\n    body = RichTextUploadingField(null=True, blank=True)\n    featured = models.BooleanField(default=False)\n    tags = models.ManyToManyField(Tag, blank=True)\n\n    options = (('draft', 'Draft'),\n               ('published', 'Published'))\n\n    slug = models.SlugField(max_length=250, unique_for_date='publish')\n    publish = models.DateTimeField(default=timezone.now)\n\n    status = models.CharField(max_length=10, choices=options, default='draft')\n\n    objects = models.Manager()  # default manager \n    articlemanager = ArticleManager()  # custom manager\n\n    def get_absolute_url(self):\n        return reverse('blog:article', args=[self.slug])\n\n    class Meta:\n        ordering = ('-publish',)\n\n    def __str__(self):\n        return self.headline\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/blog/models.py b/blog/models.py
+--- a/blog/models.py	(revision 693cef8f5d10428a828c3c9370a15a56ed69eefc)
++++ b/blog/models.py	(date 1701249286165)
+@@ -51,6 +51,22 @@
+     objects = models.Manager()  # default manager 
+     articlemanager = ArticleManager()  # custom manager
+ 
++    STAGE_CHOICES = [
++        ('draft', 'Draft'),
++        ('under_review', 'Under Review'),
++        ('reviewed_pass', 'Reviewed (Pass)'),
++        ('reviewed_edit', 'Reviewed (Back for Editing)'),
++        ('published', 'Published'),
++    ]
++
++    stage = models.CharField(max_length=20, choices=STAGE_CHOICES, default='draft')
++
++    ARTICLE_TYPE_CHOICES = [
++        ('private', 'Private'),
++        ('public', 'Public'),
++    ]
++    article_type = models.CharField(max_length=20, choices=ARTICLE_TYPE_CHOICES, default='private')
++
+     def get_absolute_url(self):
+         return reverse('blog:article', args=[self.slug])
+ 

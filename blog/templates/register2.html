@@ -1,0 +1,271 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Design by foolishdeveloper.com -->
+    <title>Glassmorphism login Form Tutorial in html css</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Blog</title>
+
+    <!-- Stylesheet -->
+
+<style media="screen">
+      *,
+*:before,
+*:after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #080710;
+}
+.background{
+    width: 430px;
+    height: 520px;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+}
+.background .shape{
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    border-radius: 50%;
+}
+.shape:first-child{
+    background: linear-gradient(
+        #1845ad,
+        #23a2f6
+    );
+    left: -80px;
+    top: -80px;
+}
+.shape:last-child{
+    background: linear-gradient(
+        to right,
+        #ff512f,
+        #f09819
+    );
+    right: -30px;
+    bottom: -80px;
+}
+form {
+    height: auto; /* Set height to auto for dynamic height based on content */
+    width: 400px;
+    background-color: rgba(255, 255, 255, 0.13);
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+    padding: 20px; /* Adjust padding as needed */
+}
+
+form *{
+    font-family: 'Poppins',sans-serif;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+}
+form h3{
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 42px;
+    text-align: center;
+}
+
+label{
+    display: block;
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 500;
+}
+input{
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255,255,255,0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 300;
+}
+::placeholder{
+    color: #e5e5e5;
+}
+button{
+    margin-top: 50px;
+    width: 100%;
+    background-color: #ffffff;
+    color: #080710;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.social{
+  margin-top: 30px;
+  display: flex;
+}
+.social div{
+  background: red;
+  width: 150px;
+  border-radius: 3px;
+  padding: 5px 10px 10px 5px;
+  background-color: rgba(255,255,255,0.27);
+  color: #eaf0fb;
+  text-align: center;
+}
+.social div:hover{
+  background-color: rgba(255,255,255,0.47);
+}
+.social .fb{
+  margin-left: 25px;
+}
+.social i{
+  margin-right: 4px;
+}
+
+
+
+
+        body {
+            background-color: #080710;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 25%; /* Adjust the width of the sidebar as needed */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .login-section {
+            width: 75%; /* Adjust the width of the login section as needed */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        @media screen and (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar, .login-section {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <!-- Add your sidebar content here -->
+    <h1 style="color: #00FFFF">Coders.Bloggers</h1><br>
+    <h3 style="color: #7d9f51 ">Our Sidebar</h3>
+    <p class='text-muted'>
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-light">Latest Posts</li>
+            <li class="list-group-item list-group-item-light">Announcements</li>
+            <li class="list-group-item list-group-item-light">Calendars</li>
+        </ul>
+    </p>
+
+                <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px;" style="padding-top: 120px;">
+                <a id="list-group" style="text-decoration: none;" href="" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+                  <!-- <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg> -->
+                  <span class="fs-5 fw-semibold" id="gist-btn">Latest Gist</span>
+                </a>
+                <div class="list-group list-group-flush border-bottom scrollarea">
+                  <a href="#" class="list-group-item list-group-item-action  lh-tight" aria-current="true">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                      <strong class="mb-1">Seriously, Stop Trying to Teach Toddlers How to Code...By Frank
+                    </strong>
+                      <small>Wed</small>
+                    </div>
+                    <div class="col-10 mb-1 small">AS A BABY nerd, I was obsessed with Hackers. The 1995 cult movie... </div>
+                  </a>
+                  <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                      <strong class="mb-1">Its not a bug - It's a feature... by John Kuira</strong>
+                      <small class="text-muted">Tues</small>
+                    </div>
+                    <div class="col-10 mb-1 small">When it comes to coding, everything works like a miracle, let me use that word...hahaha</div>
+                  </a>
+                  <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                      <strong class="mb-1">I wanted to be a great programmer but...by John Kuira</strong>
+                      <small class="text-muted">Mon</small>
+                    </div>
+                    <div class="col-10 mb-1 small">in my family trait, nobody knows anything about computers and i wanted to be the greatest computer scientist ever and...</div>
+                  </a>
+
+                </div>
+              </div>
+
+</div>
+
+<div class="login-section">
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <h3 style="color: #00FFFF">Register Here</h3>
+{#        {{ form.username.label }}#}
+{#        {{ form.email.label }}#}
+{#        {{ form.password1.label }}#}
+{#        {{ form.password2.label }}#}
+        <label for="username">Username</label>
+         {{ form.username }}
+
+        <label for="email">Email</label>
+        {{ form.email }}
+
+        <label for="password">Password</label>
+         {{ form.password1 }}
+
+        <label for="password">Confirm Password</label>
+         {{ form.password2 }}
+
+        <button>Submit</button>
+        <div class="social">
+          <div class="go"><i class="fab fa-google"></i>  Google</div>
+          <div class="fb"><i class="fab fa-facebook"></i>  Facebook</div>
+        </div>
+    </form>
+</div>
+<script>
+
+		//Query All input fields
+		var form_fields = document.getElementsByTagName('input')
+		form_fields[1].placeholder='Username..';
+		form_fields[2].placeholder='Email..';
+		form_fields[3].placeholder='Enter password...';
+		form_fields[4].placeholder='Re-enter Password...';
+
+
+		for (var field in form_fields){
+			form_fields[field].className += ' form-control' }
+<
+</script>
+</body>
+</html>

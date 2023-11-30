@@ -2,6 +2,23 @@
 from django.shortcuts import get_object_or_404, render
 from .models import Article, Profile, Tag
 from django.db.models import Q
+from django.contrib.auth.forms import UserCreationForm
+from .forms import CreateUserForm
+
+
+def registerPage(request):
+    form = CreateUserForm
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+    context = {'form': form}
+    return render(request, 'register2.html', context)
+
+
+def loginPage(request):
+    context = {}
+    return render(request, 'login.html')
 
 
 def home(request):
